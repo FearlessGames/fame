@@ -46,7 +46,7 @@
 		<delete dir="${build.dir.war}"/>
 
 		<copy todir="${build.dir.war}">
-			<fileset dir="${baseDir}/Frontend/web"/>
+			<fileset dir="/src/main/web"/>
 		</copy>
 
 		<copy todir="${build.dir.war}/WEB-INF/classes">
