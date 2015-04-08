@@ -1,0 +1,1 @@
+${userAccount.forumId}:${userAccount.email}

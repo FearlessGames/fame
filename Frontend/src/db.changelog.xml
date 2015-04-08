@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet author="olle.back" id="creating initial schema">
+
+        <createTable tableName="UserAccount">
+            <column name="username" type="varchar(255)"/>
+            <column name="pk" type="varchar(255)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="password" type="varchar(255)"/>
+            <column name="email" type="varchar(255)"/>
+        </createTable>
+
+        <createIndex tableName="UserAccount" indexName="idx_useraccount_username">
+            <column name="username"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="UserAccount"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
+

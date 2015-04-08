@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+
+<project name="FearlessUserWeb" default="all" basedir=".">
+
+	<dirname property="baseDir" file="${ant.file}"/>
+
+
+	<property name="build.dir" location="${baseDir}/build"/>
+	<property name="build.dir.classes" location="${build.dir}/classes"/>
+	<property name="build.dir.test" value="${build.dir}/test"/>
+
+
+	<property name="src.tests" location="${baseDir}/Frontend/test/"/>
+	<property name="src.dir" value="${baseDir}/Frontend/src"/>
+	<property name="reports.dir" value="${baseDir}/reports"/>
+
+
+	<path id="buildlib.classpath">
+		<fileset dir="${baseDir}/lib">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<path id="testlib.classpath">
+		<fileset dir="lib">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<path id="testlib.classpath">
+		<pathelement location="${baseDir}/Frontend/resources"/>
+	</path>
+
+	<path id="test.build.classpath">
+		<path refid="buildlib.classpath"/>
+		<pathelement location="${build.dir.classes}"/>
+		<pathelement location="${build.dir.test}"/>
+		<path refid="testlib.classpath"/>
+	</path>
+
+	<target name="ci-build" depends="war, full-test"/>
+
+	<target name="war" depends="compile">
+		<property name="build.dir.war" value="${build.dir}/war"/>
+
+		<delete dir="${build.dir.war}"/>
+
+		<copy todir="${build.dir.war}">
+			<fileset dir="${baseDir}/Frontend/web"/>
+		</copy>
+
+		<copy todir="${build.dir.war}/WEB-INF/classes">
+			<fileset dir="${build.dir.classes}"/>
+		</copy>
+
+		<copy todir="${build.dir.war}/WEB-INF/lib" flatten="true">
+			<fileset dir="${baseDir}/lib">
+				<include name="**/*.jar"/>
+				<exclude name="servlet-api.jar"/>
+				<exclude name="tests/*.jar"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${build.dir.war}/WEB-INF/classes">
+			<fileset dir="${src.dir}">
+				<patternset>
+					<include name="**/?*.properties"/>
+					<include name="**/?*.xml"/>
+					<include name="**/?*.gif"/>
+					<include name="**/?*.png"/>
+					<include name="**/?*.jpeg"/>
+					<include name="**/?*.jpg"/>
+					<include name="**/?*.html"/>
+					<include name="**/?*.dtd"/>
+					<include name="**/?*.tld"/>
+					<include name="**/?*.ftl"/>
+				</patternset>
+				<type type="file"/>
+			</fileset>
+		</copy>
+
+
+		<zip destfile="${build.dir}/fame.war">
+			<zipfileset dir="${build.dir.war}"/>
+		</zip>
+
+
+		<delete dir="${build.dir.war}"/>
+
+	</target>
+
+
+	<path id="run.classpath">
+		<path refid="buildlib.classpath"/>
+	</path>
+
+	<target name="build" depends="compile"/>
+
+	<target name="full-test" depends="build, test, check-failures"/>
+
+	<target name="all" depends="full-test"/>
+
+
+	<target name="init" description="Creates build directories">
+		<echo>===== Creating build directories =====</echo>
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.dir.classes}"/>
+		<mkdir dir="${build.dir.test}"/>
+	</target>
+
+	<target name="clean" description="Removes all build files">
+		<echo>===== Removing build directories =====</echo>
+		<delete dir="${build.dir}"/>
+	</target>
+
+	<target name="compile" depends="init">
+		<echo>===== Compiling sources =====</echo>
+		<javac srcdir="${src.dir}"
+				 destdir="${build.dir}/classes"
+				 debug="on"
+				 deprecation="on"
+				 optimize="on"
+				 source="1.6"
+				 target="1.6"
+				 includeantruntime="false"
+				>
+			<classpath refid="buildlib.classpath"/>
+		</javac>
+	</target>
+
+	<target name="compile-test" depends="compile">
+		<echo>===== Compiling tests =====</echo>
+		<javac
+				destdir="${build.dir.test}"
+				debug="on"
+				deprecation="on"
+				optimize="on"
+				includeantruntime="false"
+				classpathref="test.build.classpath"
+				>
+			<src path="${src.tests}"/>
+		</javac>
+	</target>
+
+	<target name="run-test">
+		<delete failonerror="false" file="tests.fail"/>
+		<mkdir dir="${reports.dir}"/>
+
+		<echo>===== Running tests =====</echo>
+		<copy toDir="${build.dir.test}" file="${src.tests}/logback-test.xml" failonerror="false"/>
+
+		<junit printsummary="no" logfailedtests="true" haltonfailure="no" failureproperty="tests.fail" fork="true"
+				 forkmode="perBatch">
+			<classpath>
+				<pathelement location="${build.dir.test}"/>
+				<path refid="test.build.classpath"/>
+			</classpath>
+			<formatter type="xml"/>
+			<batchtest fork="yes" todir="${reports.dir}">
+				<fileset dir="${src.tests}">
+					<include name="**/*Test*.java"/>
+					<exclude name="**/AllTests.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+		<junitreport todir="${reports.dir}">
+			<fileset dir="${reports.dir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${reports.dir}/html"/>
+		</junitreport>
+	</target>
+
+
+	<target name="test" depends="compile, compile-test, run-test" description="Runs the tests">
+	</target>
+
+	<target name="check-failures">
+		<available file="tests.fail" property="tests.failed"/>
+		<fail if="tests.failed"/>
+	</target>
+
+
+</project>

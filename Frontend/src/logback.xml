@@ -1,0 +1,26 @@
+<configuration scan="true" scanPeriod="30 seconds">
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+		</layout>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${catalina.home}/logs/fame.log</file>
+		<append>true</append>
+		<encoder>
+			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+		</encoder>
+	</appender>
+
+	<logger name="se.fearless" level="DEBUG" additivity="false">
+		<appender-ref ref="FILE"/>
+	</logger>
+
+	<root level="warn">
+		<appender-ref ref="FILE"/>
+		<appender-ref ref="STDOUT"/>
+	</root>
+
+</configuration>

@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: white;
+}
+
+#bg {
+    background: url(img/bg1.jpg) no-repeat;
+    width: 1600px;
+    height: 1000px;
+    margin: 0 auto auto;
+    padding: 0;
+}
+
+body.black {
+    background-color: black;
+}
+
+div.header {
+    background: url(img/header1.png) no-repeat;
+    width: 800px;
+    height: 50px;
+    margin: 0 auto auto;
+}
+
+div.topbar {
+    background: url(img/topbar.png) no-repeat;
+    width: 800px;
+    height: 25px;
+    margin: 0 auto auto;
+    padding: 2px 0 0;
+}
+
+div.link {
+    background: url(img/button.png) no-repeat;
+    width: 100px;
+    height: 18px;
+    margin: 0 3px auto;
+    padding: 3px 0 0;
+    text-align: center;
+}
+
+a.bold {
+    font-size: 10px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+div.space250 {
+    width: 100%;
+    height: 250px;
+}
+
+div.space20 {
+    width: 100%;
+    height: 20px;
+}
+
+#createAccountBody {
+    background: url(img/main.png) no-repeat;
+    width: 800px;
+    height: 871px;
+    margin: 0 auto auto;
+}
+
+div.header2 {
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-left: 0;
+    padding-left: 70px;
+    padding-top: 52px;
+}
+
+#createAccountForm {
+    margin-left: 190px;
+    margin-top: 80px;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+p#headerText {
+    font-size: 12px;
+    font-weight: bold;
+    padding-top: 18px;
+    padding-left: 25px;
+}
+
+.button {
+    background: url(img/submit.png) no-repeat;
+    border: none;
+    width: 80px;
+    height: 25px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.textfield {
+    background: url(img/field.png) no-repeat;
+    border: none;
+    width: 400px;
+    height: 50px;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 15px;
+}
+
+.textfieldWhite {
+    background-color: white;
+    color: black;
+    border: none;
+    width: 200px;
+    height: 20px;
+    font-size: 12px;
+    padding-left: 15px;
+}
+
+.error {
+    font-size: 12px;
+    font-weight: bold;
+    color: Red;
+}
+
+.padder {
+    padding-top: 12px;
+    padding-left: 22px;
+}
+
+.form-main {
+    width: 600px;
+}
+
