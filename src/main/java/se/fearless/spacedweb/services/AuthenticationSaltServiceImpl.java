@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import se.fearless.spacedweb.model.Salts;
 import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.persistance.dao.UserAccountDao;
-import se.fearlessgames.common.util.uuid.UUIDFactory;
+import se.fearlessgames.common.uuid.UUIDFactory;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package se.fearless.spacedweb.utils;
 
 import org.springframework.stereotype.Service;
-import se.fearlessgames.common.util.Digester;
+import se.fearlessgames.common.security.Digester;
 
 @Service
 public class UserAccountDigester extends Digester {

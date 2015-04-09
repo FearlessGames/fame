@@ -4,7 +4,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.usertype.UserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.fearlessgames.common.util.uuid.UUID;
+import se.fearlessgames.common.uuid.UUID;
 
 import java.io.Serializable;
 import java.sql.PreparedStatement;

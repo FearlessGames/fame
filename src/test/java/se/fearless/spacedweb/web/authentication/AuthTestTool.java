@@ -4,7 +4,8 @@ import org.junit.Ignore;
 import org.springframework.security.core.codec.Base64;
 import se.fearless.spacedweb.model.Salts;
 import se.fearless.spacedweb.utils.UserAccountDigester;
-import se.fearlessgames.common.util.Digester;
+import se.fearlessgames.common.security.BCrypter;
+import se.fearlessgames.common.security.Digester;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -98,7 +99,7 @@ public class AuthTestTool {
         System.out.println("got salts: "+salts);
         String ots = salts.getOneTimeSalt();
         String userSalt = salts.getUserSalt();
-        String hash = dig.sha512Hex(dig.bcrypt("bronzon" + "bronzon", userSalt) + ots);
+        String hash = dig.sha512Hex(BCrypter.bcrypt("bronzon" + "bronzon", userSalt) + ots);
         String uri = new StringBuilder(SPACED_URL).append("?").
                 append("userName=").append("bronzon").
                 append("&hash=").append(hash).

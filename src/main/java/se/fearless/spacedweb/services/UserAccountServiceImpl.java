@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.persistance.dao.UserAccountDao;
-import se.fearlessgames.common.util.Digester;
-import se.fearlessgames.common.util.uuid.UUID;
+import se.fearlessgames.common.security.BCrypter;
+import se.fearlessgames.common.security.Digester;
+import se.fearlessgames.common.uuid.UUID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +69,8 @@ public class UserAccountServiceImpl implements UserAccountService {
             throw new UsernameOccupiedException();
         }
 
-        String userSalt = digester.generateBCryptSalt();
-        String userHash = digester.bcrypt(username + password, userSalt);
+        String userSalt = BCrypter.generateBCryptSalt();
+        String userHash = BCrypter.bcrypt(username + password, userSalt);
 
         byte[] bytes = digester.md5(username);
         UUID accountPk = UUID.nameUUIDFromBytes(bytes);

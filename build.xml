@@ -10,8 +10,8 @@
 	<property name="build.dir.test" value="${build.dir}/test"/>
 
 
-	<property name="src.tests" location="${baseDir}/Frontend/test/"/>
-	<property name="src.dir" value="${baseDir}/Frontend/src"/>
+	<property name="src.tests" location="${baseDir}/src/test/java"/>
+	<property name="src.dir" value="${baseDir}/src/main/java"/>
 	<property name="reports.dir" value="${baseDir}/reports"/>
 
 
@@ -46,7 +46,7 @@
 		<delete dir="${build.dir.war}"/>
 
 		<copy todir="${build.dir.war}">
-			<fileset dir="/src/main/web"/>
+			<fileset dir="/src/main/webapp"/>
 		</copy>
 
 		<copy todir="${build.dir.war}/WEB-INF/classes">

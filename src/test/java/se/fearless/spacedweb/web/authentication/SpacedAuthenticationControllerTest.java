@@ -2,18 +2,18 @@ package se.fearless.spacedweb.web.authentication;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import org.springframework.ui.Model;
 import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.services.UserAccountService;
-import se.fearlessgames.common.util.uuid.UUID;
+import se.fearlessgames.common.uuid.UUID;
 import se.mockachino.annotations.Mock;
 
 import javax.servlet.http.HttpServletResponse;
 
 import static junit.framework.Assert.assertEquals;
 import static se.mockachino.Mockachino.*;
-import static se.mockachino.matchers.Matchers.*;
+import static se.mockachino.matchers.Matchers.any;
+import static se.mockachino.matchers.Matchers.eq;
 
 public class SpacedAuthenticationControllerTest {
     @Mock

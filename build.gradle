@@ -1,0 +1,36 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+repositories {
+	mavenLocal()
+	jcenter()
+	maven {
+		url 'http://flexo.fearlessgames.se/artifactory/libs-local'
+		credentials {
+			username = "reader"
+			password = "f3ArlessGamesR0X!"
+		}
+	}
+}
+
+dependencies {
+	compile 'org.slf4j:slf4j-api:1.7.7'
+	compile 'org.mindrot:jbcrypt:0.3m'
+	compile 'javax.servlet:servlet-api:2.4'
+	compile 'javax.servlet:jstl:1.2'
+	compile 'org.springframework:spring-context:3.0.5.RELEASE'
+	compile 'org.springframework:spring-webmvc:3.0.5.RELEASE'
+	compile 'org.springframework:spring-tx:3.0.5.RELEASE'
+	compile 'org.springframework.security:spring-security-web:3.0.5.RELEASE'
+	compile 'org.hibernate:hibernate-core:3.6.0.Final'
+	compile 'org.hibernate:hibernate-validator:4.1.0.Final'
+	compile 'javax.validation:validation-api:1.0.0.GA'
+	compile 'net.tanesha.recaptcha4j:recaptcha4j:0.0.7'
+	compile 'se.fearless.fearless-common:core:1.0-alfa'
+	compile 'se.fearless.fearless-common:security:1.0-alfa'
+	runtime 'org.slf4j:jcl-over-slf4j:1.7.7'
+	runtime 'org.slf4j:slf4j-jdk14:1.7.7'
+	runtime 'ch.qos.logback:logback-classic:1.1.2'
+	testCompile 'junit:junit:4.12'
+	testCompile 'se.mockachino:mockachino:0.6.2'
+}

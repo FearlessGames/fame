@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import se.fearless.spacedweb.persistance.PersistableBase;
 import se.fearless.spacedweb.persistance.dao.Dao;
-import se.fearlessgames.common.util.uuid.UUID;
+import se.fearlessgames.common.uuid.UUID;
 
 import java.util.List;
 

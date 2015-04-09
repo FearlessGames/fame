@@ -100,7 +100,7 @@
         </security:authentication-provider>
     </security:authentication-manager>
 
-    <bean class="se.fearlessgames.common.util.uuid.UUIDFactoryImpl" name="uuidFactory">
+    <bean class="se.fearlessgames.common.uuid.UUIDFactoryImpl" name="uuidFactory">
         <constructor-arg name="timeProvider" ref="timeProvider"/>
         <constructor-arg name="numberGenerator" ref="numberGenerator"/>
 

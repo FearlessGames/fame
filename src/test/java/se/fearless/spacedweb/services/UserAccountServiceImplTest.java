@@ -7,8 +7,9 @@ import org.mindrot.jbcrypt.BCrypt;
 import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.persistance.dao.UserAccountDao;
 import se.fearless.spacedweb.utils.UserAccountDigester;
-import se.fearlessgames.common.util.uuid.UUID;
-import se.fearlessgames.common.util.uuid.UUIDFactoryImpl;
+import se.fearlessgames.common.security.BCrypter;
+import se.fearlessgames.common.uuid.UUID;
+import se.fearlessgames.common.uuid.UUIDFactoryImpl;
 import se.mockachino.Mockachino;
 import se.mockachino.annotations.Mock;
 
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
 import static se.mockachino.Mockachino.*;
 import static se.mockachino.matchers.Matchers.any;
 
@@ -72,13 +72,13 @@ public class UserAccountServiceImplTest {
         String correctUserSalt = BCrypt.gensalt(5);
         String username = "username";
         String correctPassword = "password";
-        String correctBCryptHash = digester.bcrypt(correctPassword, correctUserSalt);
+        String correctBCryptHash = BCrypter.bcrypt(correctPassword, correctUserSalt);
         UserAccount userAccount = new UserAccount(new UUID(1l, 1l), username, correctBCryptHash, correctUserSalt, "olle.back@poopshop.com", new ArrayList<String>());
         when(dao.findByUsername(username)).thenReturn(userAccount);
         String oneTimeSalt = "salt";
         when(authSaltService.getOneTimeSaltForUsername(username)).thenReturn(oneTimeSalt);
         String wrongUserSalt = BCrypt.gensalt(5);
-        String wrongBCryptHashDueToWrongSalt = digester.bcrypt(correctPassword, wrongUserSalt);
+        String wrongBCryptHashDueToWrongSalt = BCrypter.bcrypt(correctPassword, wrongUserSalt);
         String hashFromClient = digester.sha512Hex(wrongBCryptHashDueToWrongSalt + oneTimeSalt);
         UserAccount account = userAccountService.authenticate(username, hashFromClient);
         assertNull(account);
@@ -90,13 +90,13 @@ public class UserAccountServiceImplTest {
         String correctUserSalt = BCrypt.gensalt(5);
         String username = "username";
         String correctPassword = "password";
-        String correctBCryptHash = digester.bcrypt(correctPassword, correctUserSalt);
+        String correctBCryptHash = BCrypter.bcrypt(correctPassword, correctUserSalt);
         UserAccount userAccount = new UserAccount(new UUID(1l, 1l), username, correctBCryptHash, correctUserSalt, "olle.back@poopshop.com", new ArrayList<String>());
         when(dao.findByUsername(username)).thenReturn(userAccount);
         String oneTimeSalt = "salt";
         when(authSaltService.getOneTimeSaltForUsername(username)).thenReturn(oneTimeSalt);
         String wrongUserSalt = BCrypt.gensalt(5);
-        String wrongBCryptHashDueToWrongSalt = digester.bcrypt(correctPassword, wrongUserSalt);
+        String wrongBCryptHashDueToWrongSalt = BCrypter.bcrypt(correctPassword, wrongUserSalt);
         String hashFromClient = digester.sha512Hex(wrongBCryptHashDueToWrongSalt + oneTimeSalt);
         UserAccount account = userAccountService.authenticate(username, hashFromClient);
         assertNull(account);
@@ -108,13 +108,13 @@ public class UserAccountServiceImplTest {
         String correctUserSalt = BCrypt.gensalt(5);
         String username = "username";
         String correctPassword = "password";
-        String correctBCryptHash = digester.bcrypt(correctPassword, correctUserSalt);
+        String correctBCryptHash = BCrypter.bcrypt(correctPassword, correctUserSalt);
         String incorrectPassword = "incorrectmutherbitches";
         UserAccount userAccount = new UserAccount(new UUID(1l, 1l), username, correctBCryptHash, correctUserSalt, "olle.back@poopshop.com", new ArrayList<String>());
         when(dao.findByUsername(username)).thenReturn(userAccount);
         String oneTimeSalt = "salt";
         when(authSaltService.getOneTimeSaltForUsername(username)).thenReturn(oneTimeSalt);
-        String wrongBCryptHashDueToWrongSalt = digester.bcrypt(incorrectPassword, correctUserSalt);
+        String wrongBCryptHashDueToWrongSalt = BCrypter.bcrypt(incorrectPassword, correctUserSalt);
         String hashFromClient = digester.sha512Hex(wrongBCryptHashDueToWrongSalt + oneTimeSalt);
         UserAccount account = userAccountService.authenticate(username, hashFromClient);
         assertNull(account);

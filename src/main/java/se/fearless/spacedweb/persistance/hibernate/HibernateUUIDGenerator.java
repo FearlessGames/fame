@@ -3,9 +3,9 @@ package se.fearless.spacedweb.persistance.hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionImplementor;
 import org.hibernate.id.IdentifierGenerator;
-import se.fearlessgames.common.util.SystemTimeProvider;
-import se.fearlessgames.common.util.uuid.UUIDFactory;
-import se.fearlessgames.common.util.uuid.UUIDFactoryImpl;
+import se.fearlessgames.common.time.SystemTimeProvider;
+import se.fearlessgames.common.uuid.UUIDFactory;
+import se.fearlessgames.common.uuid.UUIDFactoryImpl;
 
 import java.io.Serializable;
 import java.security.SecureRandom;
