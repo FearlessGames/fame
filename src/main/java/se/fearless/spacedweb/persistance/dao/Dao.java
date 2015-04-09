@@ -1,7 +1,7 @@
 package se.fearless.spacedweb.persistance.dao;
 
+import se.fearless.common.uuid.UUID;
 import se.fearless.spacedweb.persistance.PersistableBase;
-import se.fearlessgames.common.uuid.UUID;
 
 import java.util.List;
 

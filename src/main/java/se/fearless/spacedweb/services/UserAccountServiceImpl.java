@@ -5,11 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.fearless.common.security.BCrypter;
+import se.fearless.common.security.Digester;
+import se.fearless.common.uuid.UUID;
 import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.persistance.dao.UserAccountDao;
-import se.fearlessgames.common.security.BCrypter;
-import se.fearlessgames.common.security.Digester;
-import se.fearlessgames.common.uuid.UUID;
 
 import java.util.ArrayList;
 import java.util.List;

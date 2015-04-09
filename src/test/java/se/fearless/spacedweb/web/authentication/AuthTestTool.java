@@ -2,10 +2,10 @@ package se.fearless.spacedweb.web.authentication;
 
 import org.junit.Ignore;
 import org.springframework.security.core.codec.Base64;
+import se.fearless.common.security.BCrypter;
+import se.fearless.common.security.Digester;
 import se.fearless.spacedweb.model.Salts;
 import se.fearless.spacedweb.utils.UserAccountDigester;
-import se.fearlessgames.common.security.BCrypter;
-import se.fearlessgames.common.security.Digester;
 
 import java.io.IOException;
 import java.io.InputStream;

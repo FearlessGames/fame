@@ -2,11 +2,11 @@ package se.fearless.spacedweb.services;
 
 import org.junit.Before;
 import org.junit.Test;
+import se.fearless.common.uuid.UUID;
+import se.fearless.common.uuid.UUIDFactory;
 import se.fearless.spacedweb.model.Salts;
 import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.persistance.dao.UserAccountDao;
-import se.fearlessgames.common.uuid.UUID;
-import se.fearlessgames.common.uuid.UUIDFactory;
 import se.mockachino.annotations.Mock;
 
 import java.util.ArrayList;

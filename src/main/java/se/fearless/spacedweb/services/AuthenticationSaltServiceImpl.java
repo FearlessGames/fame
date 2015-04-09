@@ -2,10 +2,10 @@ package se.fearless.spacedweb.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.fearless.common.uuid.UUIDFactory;
 import se.fearless.spacedweb.model.Salts;
 import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.persistance.dao.UserAccountDao;
-import se.fearlessgames.common.uuid.UUIDFactory;
 
 import java.util.HashMap;
 import java.util.Map;

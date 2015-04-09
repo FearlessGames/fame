@@ -100,12 +100,12 @@
         </security:authentication-provider>
     </security:authentication-manager>
 
-    <bean class="se.fearlessgames.common.uuid.UUIDFactoryImpl" name="uuidFactory">
+    <bean class="se.fearless.common.uuid.UUIDFactoryImpl" name="uuidFactory">
         <constructor-arg name="timeProvider" ref="timeProvider"/>
         <constructor-arg name="numberGenerator" ref="numberGenerator"/>
 
     </bean>
-    <bean id="timeProvider" class="se.fearlessgames.common.util.SystemTimeProvider"/>
+    <bean id="timeProvider" class="se.fearless.common.util.SystemTimeProvider"/>
     <bean id="numberGenerator" class="java.util.Random"/>
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${mailserver}"/>

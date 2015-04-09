@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.fearless.common.security.BCrypter;
+import se.fearless.common.uuid.UUIDFactory;
 import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.persistance.dao.UserAccountDao;
 import se.fearless.spacedweb.services.mail.ResetPasswordMail;
-import se.fearlessgames.common.security.BCrypter;
-import se.fearlessgames.common.uuid.UUIDFactory;
 
 import java.util.HashMap;
 import java.util.Map;

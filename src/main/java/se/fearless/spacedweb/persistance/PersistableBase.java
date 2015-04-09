@@ -3,8 +3,8 @@ package se.fearless.spacedweb.persistance;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import se.fearless.common.uuid.UUID;
 import se.fearless.spacedweb.persistance.hibernate.UUIDHibernateType;
-import se.fearlessgames.common.uuid.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

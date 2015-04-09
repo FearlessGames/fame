@@ -3,9 +3,9 @@ package se.fearless.spacedweb.web.authentication;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
+import se.fearless.common.uuid.UUID;
 import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.services.UserAccountService;
-import se.fearlessgames.common.uuid.UUID;
 import se.mockachino.annotations.Mock;
 
 import javax.servlet.http.HttpServletResponse;

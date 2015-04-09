@@ -4,12 +4,12 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mindrot.jbcrypt.BCrypt;
+import se.fearless.common.security.BCrypter;
+import se.fearless.common.uuid.UUID;
+import se.fearless.common.uuid.UUIDFactoryImpl;
 import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.persistance.dao.UserAccountDao;
 import se.fearless.spacedweb.utils.UserAccountDigester;
-import se.fearlessgames.common.security.BCrypter;
-import se.fearlessgames.common.uuid.UUID;
-import se.fearlessgames.common.uuid.UUIDFactoryImpl;
 import se.mockachino.Mockachino;
 import se.mockachino.annotations.Mock;
 
