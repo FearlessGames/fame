@@ -12,7 +12,7 @@
         _gaq.push(['_setAccount', 'UA-12038900-4']);
         _gaq.push(['_trackPageview']);
 
-        (function() {
+        (function () {
             var ga = document.createElement('script');
             ga.type = 'text/javascript';
             ga.async = true;

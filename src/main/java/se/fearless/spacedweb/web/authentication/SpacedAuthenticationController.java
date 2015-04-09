@@ -13,19 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class SpacedAuthenticationController extends AuthenticationController {
-    private static final String SPACED_FEATURE = "spaced";
+	private static final String SPACED_FEATURE = "spaced";
 
-    @Autowired
-    public SpacedAuthenticationController(UserAccountService userAccountService, @Qualifier("spacedServiceKey") String expectedServiceKey) {
-        super(userAccountService, expectedServiceKey);
-    }
+	@Autowired
+	public SpacedAuthenticationController(UserAccountService userAccountService, @Qualifier("spacedServiceKey") String expectedServiceKey) {
+		super(userAccountService, expectedServiceKey);
+	}
 
-    @RequestMapping(value = "/api/auth/spaced.html", method = RequestMethod.GET)
-    public String authenticateSpaced(HttpServletResponse response, Model model, String userName, String hash, String serviceKey){
-        authService(serviceKey);
-        UserAccount userAccount = userAccountService.authenticate(userName, hash);
-        authorize(response,model,SPACED_FEATURE,userAccount);
-        return "authSpaced";
-    }
+	@RequestMapping(value = "/api/auth/spaced.html", method = RequestMethod.GET)
+	public String authenticateSpaced(HttpServletResponse response, Model model, String userName, String hash, String serviceKey) {
+		authService(serviceKey);
+		UserAccount userAccount = userAccountService.authenticate(userName, hash);
+		authorize(response, model, SPACED_FEATURE, userAccount);
+		return "authSpaced";
+	}
 
 }

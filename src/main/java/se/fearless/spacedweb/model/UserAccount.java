@@ -43,7 +43,7 @@ public class UserAccount extends PersistableBase {
     }
 
     public UserAccount(UUID accountPk, String username, String userHash, String userSalt, String email, List<String> features) {
-        this(accountPk,username,userHash,email);
+        this(accountPk, username, userHash, email);
         this.features = features;
         this.userSalt = userSalt;
     }
@@ -83,10 +83,10 @@ public class UserAccount extends PersistableBase {
     @Override
     public String toString() {
         return "UserAccount{" +
-                "username='" + username + '\'' +
-                ", hash='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+              "username='" + username + '\'' +
+              ", hash='" + password + '\'' +
+              ", email='" + email + '\'' +
+              '}';
     }
 
     public String getUserSalt() {

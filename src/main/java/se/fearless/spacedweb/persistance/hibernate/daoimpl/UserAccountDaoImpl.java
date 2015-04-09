@@ -12,26 +12,26 @@ import se.fearless.spacedweb.persistance.dao.UserAccountDao;
 
 @Repository
 public class UserAccountDaoImpl extends DaoImpl<UserAccount> implements UserAccountDao {
-    private final Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    public UserAccountDaoImpl(SessionFactory sessionFactory) {
-        super(sessionFactory, UserAccount.class);
-    }
+	@Autowired
+	public UserAccountDaoImpl(SessionFactory sessionFactory) {
+		super(sessionFactory, UserAccount.class);
+	}
 
 
-    @Override
-    public UserAccount findByUsername(String userName) {
-        Criteria crit = getSession().createCriteria(UserAccount.class);
-        crit.add(Restrictions.eq("username", userName));
-        return (UserAccount) crit.uniqueResult();
-    }
+	@Override
+	public UserAccount findByUsername(String userName) {
+		Criteria crit = getSession().createCriteria(UserAccount.class);
+		crit.add(Restrictions.eq("username", userName));
+		return (UserAccount) crit.uniqueResult();
+	}
 
-    @Override
-    public UserAccount findByEmail(String email) {
-        Criteria crit = getSession().createCriteria(UserAccount.class);
-        crit.add(Restrictions.eq("email", email));
-        return (UserAccount) crit.uniqueResult();
-    }
+	@Override
+	public UserAccount findByEmail(String email) {
+		Criteria crit = getSession().createCriteria(UserAccount.class);
+		crit.add(Restrictions.eq("email", email));
+		return (UserAccount) crit.uniqueResult();
+	}
 
 }

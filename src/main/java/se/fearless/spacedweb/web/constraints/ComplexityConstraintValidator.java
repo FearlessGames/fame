@@ -9,26 +9,26 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ComplexityConstraintValidator implements ConstraintValidator<Complexity, String> {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-    private Pattern pattern;
-    private int nrOfDigits;
+	private final Logger log = LoggerFactory.getLogger(getClass());
+	private Pattern pattern;
+	private int nrOfDigits;
 
-    public ComplexityConstraintValidator() {
-        pattern = Pattern.compile("\\d");
-    }
+	public ComplexityConstraintValidator() {
+		pattern = Pattern.compile("\\d");
+	}
 
-    @Override
-    public void initialize(Complexity complexity) {
-        nrOfDigits = complexity.nrOfDigits();
-    }
+	@Override
+	public void initialize(Complexity complexity) {
+		nrOfDigits = complexity.nrOfDigits();
+	}
 
-    @Override
-    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        Matcher m = pattern.matcher(s);
-        int count = 0;
-        while (m.find()) {
-            count++;
-        }
-        return count >= nrOfDigits;
-    }
+	@Override
+	public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+		Matcher m = pattern.matcher(s);
+		int count = 0;
+		while (m.find()) {
+			count++;
+		}
+		return count >= nrOfDigits;
+	}
 }

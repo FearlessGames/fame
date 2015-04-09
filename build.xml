@@ -116,13 +116,13 @@
 	<target name="compile" depends="init">
 		<echo>===== Compiling sources =====</echo>
 		<javac srcdir="${src.dir}"
-				 destdir="${build.dir}/classes"
-				 debug="on"
-				 deprecation="on"
-				 optimize="on"
-				 source="1.6"
-				 target="1.6"
-				 includeantruntime="false"
+			   destdir="${build.dir}/classes"
+			   debug="on"
+			   deprecation="on"
+			   optimize="on"
+			   source="1.6"
+			   target="1.6"
+			   includeantruntime="false"
 				>
 			<classpath refid="buildlib.classpath"/>
 		</javac>
@@ -150,7 +150,7 @@
 		<copy toDir="${build.dir.test}" file="${src.tests}/logback-test.xml" failonerror="false"/>
 
 		<junit printsummary="no" logfailedtests="true" haltonfailure="no" failureproperty="tests.fail" fork="true"
-				 forkmode="perBatch">
+			   forkmode="perBatch">
 			<classpath>
 				<pathelement location="${build.dir.test}"/>
 				<path refid="test.build.classpath"/>

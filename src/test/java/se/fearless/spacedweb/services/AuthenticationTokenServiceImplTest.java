@@ -16,46 +16,45 @@ import static se.mockachino.Mockachino.setupMocks;
 import static se.mockachino.Mockachino.when;
 
 public class AuthenticationTokenServiceImplTest {
-    public static final String USERNAME = "username";
-    @Mock
-    private UUIDFactory uuidfactory;
-    @Mock
-    private UserAccountDao userAccountDao;
-    private AuthenticationSaltService service;
-    private UUID uuid;
-    private String userSalt;
+	public static final String USERNAME = "username";
+	@Mock
+	private UUIDFactory uuidfactory;
+	@Mock
+	private UserAccountDao userAccountDao;
+	private AuthenticationSaltService service;
+	private UUID uuid;
+	private String userSalt;
 
-    @Before
-    public void setUp() {
-        setupMocks(this);
-        service = new AuthenticationSaltServiceImpl(uuidfactory, userAccountDao);
-        uuid = new UUID(1l, 1l);
-        when(uuidfactory.randomUUID()).thenReturn(uuid);
-        userSalt = "usersalt";
-        UserAccount wantedUserAccount = new UserAccount(new UUID(1l, 1l), "user", "password", userSalt, "olle.back@poopshop.com", new ArrayList<String>());
-        when(userAccountDao.findByUsername(USERNAME)).thenReturn(wantedUserAccount);
-    }
+	@Before
+	public void setUp() {
+		setupMocks(this);
+		service = new AuthenticationSaltServiceImpl(uuidfactory, userAccountDao);
+		uuid = new UUID(1l, 1l);
+		when(uuidfactory.randomUUID()).thenReturn(uuid);
+		userSalt = "usersalt";
+		UserAccount wantedUserAccount = new UserAccount(new UUID(1l, 1l), "user", "password", userSalt, "olle.back@poopshop.com", new ArrayList<String>());
+		when(userAccountDao.findByUsername(USERNAME)).thenReturn(wantedUserAccount);
+	}
 
-    @Test
-    public void testRequestSalts(){
-
-
-        String oneTimeSalt = uuid.toString();
+	@Test
+	public void testRequestSalts() {
 
 
-        Salts expectedSalts = new Salts(userSalt,oneTimeSalt);
+		String oneTimeSalt = uuid.toString();
 
-        Salts salts = service.requestSalts(USERNAME);
-        assertEquals(expectedSalts, salts);
-    }
 
-    @Test
-    public void testGetSaltByUsername() {
+		Salts expectedSalts = new Salts(userSalt, oneTimeSalt);
 
-        service.requestSalts(USERNAME);
-        assertEquals(uuid.toString(), service.getOneTimeSaltForUsername(USERNAME));
-    }
+		Salts salts = service.requestSalts(USERNAME);
+		assertEquals(expectedSalts, salts);
+	}
 
+	@Test
+	public void testGetSaltByUsername() {
+
+		service.requestSalts(USERNAME);
+		assertEquals(uuid.toString(), service.getOneTimeSaltForUsername(USERNAME));
+	}
 
 
 }

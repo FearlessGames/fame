@@ -13,19 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class ForumAuthenticationController extends AuthenticationController {
-    private static final String FEATURE = "forum";
+	private static final String FEATURE = "forum";
 
-    @Autowired
-    public ForumAuthenticationController(UserAccountService userAccountService, @Qualifier("forumServiceKey") String expectedServiceKey) {
-        super(userAccountService, expectedServiceKey);
-    }
+	@Autowired
+	public ForumAuthenticationController(UserAccountService userAccountService, @Qualifier("forumServiceKey") String expectedServiceKey) {
+		super(userAccountService, expectedServiceKey);
+	}
 
-    @RequestMapping(value = "/api/auth/forum.html", method = RequestMethod.GET)
-    public String authenticateSpaced(HttpServletResponse response, Model model, String userName, String hash, String serviceKey) {
-        authService(serviceKey);
-        UserAccount userAccount = userAccountService.authenticate(userName, hash);
-        authorize(response, model, FEATURE, userAccount);
-        return "authForum";
-    }
+	@RequestMapping(value = "/api/auth/forum.html", method = RequestMethod.GET)
+	public String authenticateSpaced(HttpServletResponse response, Model model, String userName, String hash, String serviceKey) {
+		authService(serviceKey);
+		UserAccount userAccount = userAccountService.authenticate(userName, hash);
+		authorize(response, model, FEATURE, userAccount);
+		return "authForum";
+	}
 
 }

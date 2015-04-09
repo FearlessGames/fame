@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class DummyController {
-    @RequestMapping(value = "/dummy.html", method = RequestMethod.GET)
-    public String get() {
-        return "accountCreated";
-    }
+	@RequestMapping(value = "/dummy.html", method = RequestMethod.GET)
+	public String get() {
+		return "accountCreated";
+	}
 
 }

@@ -17,50 +17,50 @@ import javax.validation.Valid;
 
 @Controller
 public class CreateAccountController {
-    public static final String FORM_VIEW = "createAccount";
-    public static final String SUCCESS_VIEW = "accountCreated";
-    private static final String URL = "/createAccount.html";
-    private final UserAccountService userAccountService;
-    private final CaptchaService captchaService;
+	public static final String FORM_VIEW = "createAccount";
+	public static final String SUCCESS_VIEW = "accountCreated";
+	private static final String URL = "/createAccount.html";
+	private final UserAccountService userAccountService;
+	private final CaptchaService captchaService;
 
 
-    @ModelAttribute()
-    public UserAccountForm newRequest() {
-        return new UserAccountForm();
-    }
+	@ModelAttribute()
+	public UserAccountForm newRequest() {
+		return new UserAccountForm();
+	}
 
-    @Autowired
-    public CreateAccountController(UserAccountService userAccountService, CaptchaService captchaService) {
-        this.userAccountService = userAccountService;
-        this.captchaService = captchaService;
-    }
+	@Autowired
+	public CreateAccountController(UserAccountService userAccountService, CaptchaService captchaService) {
+		this.userAccountService = userAccountService;
+		this.captchaService = captchaService;
+	}
 
-    @RequestMapping(value = URL, method = RequestMethod.GET)
-    public String getForm() {
-        return FORM_VIEW;
-    }
+	@RequestMapping(value = URL, method = RequestMethod.GET)
+	public String getForm() {
+		return FORM_VIEW;
+	}
 
-    @RequestMapping(value = URL, method = RequestMethod.POST)
-    public String onPost(@Valid UserAccountForm userAccountForm, BindingResult bindingResult, HttpServletRequest request) {
-        if (bindingResult.hasErrors()) {
-            return FORM_VIEW;
-        } else if (!captchaService.validateCaptcha(request)) {
-            return FORM_VIEW;
-        } else {
-            try {
-                userAccountService.createAccount(userAccountForm.getUsername(), userAccountForm.getPassword(), userAccountForm.getEmail());
-            } catch (UsernameOccupiedException e) {
-                bindingResult.addError(new FieldError("userAccountForm", "username", "username already taken"));
-                bindingResult.reject("username", "username taken");
-                return FORM_VIEW;
-            } catch (EmailOccupiedException e) {
-                bindingResult.addError(new FieldError("userAccountForm", "email", "email already taken"));
-                bindingResult.reject("email", "email taken");
-                return FORM_VIEW;
-            }
-            return SUCCESS_VIEW;
-        }
-    }
+	@RequestMapping(value = URL, method = RequestMethod.POST)
+	public String onPost(@Valid UserAccountForm userAccountForm, BindingResult bindingResult, HttpServletRequest request) {
+		if (bindingResult.hasErrors()) {
+			return FORM_VIEW;
+		} else if (!captchaService.validateCaptcha(request)) {
+			return FORM_VIEW;
+		} else {
+			try {
+				userAccountService.createAccount(userAccountForm.getUsername(), userAccountForm.getPassword(), userAccountForm.getEmail());
+			} catch (UsernameOccupiedException e) {
+				bindingResult.addError(new FieldError("userAccountForm", "username", "username already taken"));
+				bindingResult.reject("username", "username taken");
+				return FORM_VIEW;
+			} catch (EmailOccupiedException e) {
+				bindingResult.addError(new FieldError("userAccountForm", "email", "email already taken"));
+				bindingResult.reject("email", "email taken");
+				return FORM_VIEW;
+			}
+			return SUCCESS_VIEW;
+		}
+	}
 
 
 }

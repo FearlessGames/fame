@@ -11,11 +11,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = ComplexityConstraintValidator.class)
 public @interface Complexity {
-    String message() default "Not complex enough";
+	String message() default "Not complex enough";
 
-    Class<?>[] groups() default {};
+	Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+	Class<? extends Payload>[] payload() default {};
 
-    int nrOfDigits() default 1;
+	int nrOfDigits() default 1;
 }
