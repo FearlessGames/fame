@@ -1,6 +1,7 @@
 package se.fearless.spacedweb.persistance.hibernate;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.UserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,27 +66,26 @@ public class UUIDHibernateType implements UserType {
 		return original;
 	}
 
-	@Override
-	public Object nullSafeGet(ResultSet resultSet, String[] names, Object owner) throws HibernateException, SQLException {
 
-		String uuidString = resultSet.getString(names[0]);
-		if (uuidString == null) {
-			return null;
-		}
-		UUID uuid = UUID.fromString(uuidString);
+    @Override
+    public Object nullSafeGet(ResultSet resultSet, String[] names, SessionImplementor session, Object owner) throws HibernateException, SQLException {
+        String uuidString = resultSet.getString(names[0]);
+        if (uuidString == null) {
+            return null;
+        }
+        UUID uuid = UUID.fromString(uuidString);
 
-		return resultSet.wasNull() ? null : uuid;
-	}
+        return resultSet.wasNull() ? null : uuid;
+    }
 
-	@Override
-	public void nullSafeSet(PreparedStatement statement, Object value, int index) throws HibernateException, SQLException {
-		if (value == null) {
-			statement.setNull(index, Types.VARCHAR);
-		} else {
-			UUID uuid = (UUID) value;
-			statement.setString(index, uuid.toString());
-		}
+    @Override
+    public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor session) throws HibernateException, SQLException {
+        if (value == null) {
+            statement.setNull(index, Types.VARCHAR);
+        } else {
+            UUID uuid = (UUID) value;
+            statement.setString(index, uuid.toString());
+        }
 
-	}
-
+    }
 }
