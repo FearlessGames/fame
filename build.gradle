@@ -1,6 +1,17 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath(group: 'com.sahlbach.gradle', name: 'gradle-jetty-eclipse-plugin', version: '1.9.+')
+    }
+}
+apply plugin: 'jettyEclipse'
+
+
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'jetty'
+//apply plugin: 'jetty' <- official jetty plugin is jetty 6, no servlet 3.+ support
 
 repositories {
 	mavenLocal()
@@ -20,7 +31,7 @@ ext {
     hibernateVersion = '4.3.8.Final'
 }
 
-jettyRunWar.contextPath = '/'
+//jettyRunWar.contextPath = '/'
 
 
 dependencies {

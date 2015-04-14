@@ -1,7 +1,7 @@
 package se.fearless.spacedweb.web.authentication;
 
 import org.junit.Ignore;
-import org.springframework.security.core.codec.Base64;
+import org.springframework.security.crypto.codec.Base64;
 import se.fearless.common.security.BCrypter;
 import se.fearless.common.security.Digester;
 import se.fearless.spacedweb.model.Salts;
