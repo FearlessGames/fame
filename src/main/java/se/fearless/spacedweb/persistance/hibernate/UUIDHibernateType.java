@@ -69,13 +69,17 @@ public class UUIDHibernateType implements UserType {
 
     @Override
     public Object nullSafeGet(ResultSet resultSet, String[] names, SessionImplementor session, Object owner) throws HibernateException, SQLException {
+        if (resultSet.wasNull()) {
+            return null;
+        }
+
         String uuidString = resultSet.getString(names[0]);
         if (uuidString == null) {
             return null;
         }
-        UUID uuid = UUID.fromString(uuidString);
 
-        return resultSet.wasNull() ? null : uuid;
+        return UUID.fromString(uuidString);
+
     }
 
     @Override
