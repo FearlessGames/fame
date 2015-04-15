@@ -39,8 +39,8 @@ public class DataSourceConfiguration {
 
 	@Bean
 	@Autowired
-	public HibernateTransactionManager getTransactionManager(SessionFactory factory) {
-		return new HibernateTransactionManager(factory);
+    public HibernateTransactionManager txManager(SessionFactory factory) {
+        return new HibernateTransactionManager(factory);
 	}
 
 

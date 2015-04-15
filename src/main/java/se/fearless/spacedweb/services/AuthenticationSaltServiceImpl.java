@@ -7,6 +7,7 @@ import se.fearless.spacedweb.model.Salts;
 import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.persistance.dao.UserAccountDao;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +26,8 @@ public class AuthenticationSaltServiceImpl implements AuthenticationSaltService 
 	}
 
 	@Override
-	public Salts requestSalts(String username) {
+    @Transactional
+    public Salts requestSalts(String username) {
 		String oneTimeSalt = uuidFactory.randomUUID().toString();
 		oneTimeSaltsByUsername.put(username, oneTimeSalt);
 		UserAccount userAccount = userAccountDao.findByUsername(username);
