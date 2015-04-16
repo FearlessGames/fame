@@ -12,15 +12,25 @@ import javax.servlet.http.HttpServletRequest;
 public class ReCaptchaService implements CaptchaService {
     private final static String publicKey = "6LfVH8cSAAAAAGWlBywDLqdMwNR7NfH2_5NEXFag";
     private final static String privateKey = "6LfVH8cSAAAAAEC7ZmWcRhxMXeirSQFcdR96x1f2";
+    private final ReCaptchaImpl reCaptcha;
+
+    public ReCaptchaService() {
+        reCaptcha = new ReCaptchaImpl();
+        reCaptcha.setPrivateKey(privateKey);
+
+    }
 
     @Override
     public boolean validateCaptcha(HttpServletRequest request) {
         String remoteAddr = request.getRemoteAddr();
-        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
-        reCaptcha.setPrivateKey(privateKey);
         String challenge = request.getParameter("recaptcha_challenge_field");
-        String uresponse = request.getParameter("recaptcha_response_field");
-        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
+        String response = request.getParameter("recaptcha_response_field");
+        return validateCaptcha(remoteAddr, challenge, response);
+    }
+
+    @Override
+    public boolean validateCaptcha(String clientRemoteAddress, String challenge, String response) {
+        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(clientRemoteAddress, challenge, response);
         return reCaptchaResponse.isValid();
     }
 
