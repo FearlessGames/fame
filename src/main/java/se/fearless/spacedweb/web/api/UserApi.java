@@ -18,27 +18,29 @@ public class UserApi {
     private final AuthenticationSaltService authenticationSaltService;
     private final UserAccountService userAccountService;
     private final ReCaptchaService reCaptchaService;
+    private final PasswordResetService passwordResetService;
 
     @Autowired
-    public UserApi(AuthenticationSaltService authenticationSaltService, UserAccountService userAccountService, ReCaptchaService reCaptchaService) {
+    public UserApi(AuthenticationSaltService authenticationSaltService, UserAccountService userAccountService, ReCaptchaService reCaptchaService, PasswordResetService passwordResetService) {
         this.authenticationSaltService = authenticationSaltService;
         this.userAccountService = userAccountService;
         this.reCaptchaService = reCaptchaService;
+        this.passwordResetService = passwordResetService;
     }
 
-    @RequestMapping(value = "/api/rest/users/{userName}/salt", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/private/users/{userName}/salt", method = RequestMethod.GET)
     public Salts requestSalts(@PathVariable("userName") String userName) {
         return authenticationSaltService.requestSalts(userName);
     }
 
 
-    @RequestMapping(value = "/api/rest/users/{userName}/auth/{hash}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/private/users/{userName}/auth/{hash}", method = RequestMethod.GET)
     public UserAccountDTO auth(@PathVariable("userName") String userName, @PathVariable("hash") String hash) {
         UserAccount userAccount = userAccountService.authenticate(userName, hash);
         return new UserAccountDTO(userAccount.getUsername(), userAccount.getEmail(), userAccount.getTimeOfRegistration(), userAccount.getFeatures());
     }
 
-    @RequestMapping(value = "/api/res/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/public/users", method = RequestMethod.POST)
     public CreatedUserResponseDTO create(CreateUserDTO createUserDTO, HttpServletRequest request) {
         String remoteAddress = request.getRemoteAddr();
         boolean valid = reCaptchaService.validateCaptcha(remoteAddress, createUserDTO.recaptchaChallengeField, createUserDTO.recaptchaChallengeField);
@@ -59,6 +61,29 @@ public class UserApi {
 
     }
 
+    @RequestMapping(value = "/api/public/users/{email}/sendResetToken", method = RequestMethod.GET)
+    public void sendResetToken(@PathVariable("email") String email) {
+        try {
+            passwordResetService.requestAndSendResetToken(email);
+        } catch (NoSuchEmailException ignored) {
+
+        }
+    }
+
+    @RequestMapping(value = "/api/public/users/{userName}/resetPassword", method = RequestMethod.POST)
+    public void resetPassword(@PathVariable("userName") String userName, ResetPasswordDTO passwordDTO) {
+        try {
+            passwordResetService.changePassword(passwordDTO.token, passwordDTO.password);
+        } catch (IllegalTokenException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private static class ResetPasswordDTO {
+        private String password;
+        private String token;
+    }
 
     private static class CreateUserDTO {
         private String username;

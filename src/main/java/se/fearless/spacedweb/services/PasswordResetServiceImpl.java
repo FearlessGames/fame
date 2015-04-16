@@ -12,16 +12,16 @@ import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.persistance.dao.UserAccountDao;
 import se.fearless.spacedweb.services.mail.ResetPasswordMail;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class PasswordResetServiceImpl implements PasswordResetService {
 	private final UUIDFactory uuidFactory;
 	private final UserAccountDao userAccountDao;
 	private final MailSender mailSender;
-	private final Map<String, String> usernameByToken = new HashMap<String, String>();
-	private static final String BASE_URL_FOR_RESET = "http://fame.fearlessgames.se/changePassword.html?token=";
+    private final Map<String, String> usernameByToken = new ConcurrentHashMap<>();
+    private static final String BASE_URL_FOR_RESET = "http://fame.fearlessgames.se/changePassword.html?token=";
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
