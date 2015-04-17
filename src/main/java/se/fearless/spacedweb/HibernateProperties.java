@@ -13,7 +13,7 @@ public class HibernateProperties extends Properties {
 	public HibernateProperties(DatabaseConfiguration configuration) {
 		setProperty("hibernate.dialect", configuration.getHibernateDialect());
 		setProperty("hibernate.connection.driver_class", configuration.getDriverClassName());
-		setProperty("hibernate.hbm2ddl.auto", "update");
+		setProperty("hibernate.hbm2ddl.auto", "validate");
 		setProperty("hibernate.show_sql", "true");
 		setProperty("hibernate.hbm2ddl.auto", "update");
 	}
