@@ -1,6 +1,8 @@
 package se.fearless.spacedweb;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -21,6 +25,7 @@ import se.fearless.common.time.TimeProvider;
 import se.fearless.common.uuid.UUIDFactory;
 import se.fearless.common.uuid.UUIDFactoryImpl;
 
+import java.util.List;
 import java.util.Random;
 
 @Configuration
@@ -29,6 +34,7 @@ import java.util.Random;
 @ComponentScan(basePackages = {"se.fearless.spacedweb"})
 @PropertySource(value = {"classpath:settings.properties"})
 public class FameConfig extends WebMvcConfigurerAdapter {
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Value("${auth.servicekey.spaced}")
 	private String spacedServiceKey;
@@ -90,6 +96,13 @@ public class FameConfig extends WebMvcConfigurerAdapter {
 		return resolver;
 	}
 
+
+	@Override
+	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+		logger.info("Extending converters");
+		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+		converters.add(converter);
+	}
 
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {

@@ -28,7 +28,7 @@ public class UserApi {
         this.passwordResetService = passwordResetService;
     }
 
-    @RequestMapping(value = "/api/private/users/{userName}/salt", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/private/users/{userName}/salt", headers = "Accept=application/json", method = RequestMethod.GET)
     public Salts requestSalts(@PathVariable("userName") String userName) {
         return authenticationSaltService.requestSalts(userName);
     }
