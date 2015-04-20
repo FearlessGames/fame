@@ -1,10 +1,7 @@
 package se.fearless.spacedweb.web.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import se.fearless.spacedweb.model.Salts;
 import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.services.*;
@@ -41,13 +38,24 @@ public class UserApi {
     }
 
     @RequestMapping(value = "/api/public/users", method = RequestMethod.POST)
-    public CreatedUserResponseDTO create(CreateUserDTO createUserDTO, HttpServletRequest request) {
+    public CreatedUserResponseDTO createWithCaptcha(CreateUserDTO createUserDTO, HttpServletRequest request) {
         String remoteAddress = request.getRemoteAddr();
         boolean valid = reCaptchaService.validateCaptcha(remoteAddress, createUserDTO.recaptchaChallengeField, createUserDTO.recaptchaChallengeField);
         if (!valid) {
             return new CreatedUserResponseDTO();
         }
+        return createUser(createUserDTO);
 
+    }
+
+    @RequestMapping(value = "/api/private/users", method = RequestMethod.POST)
+    public CreatedUserResponseDTO create(@RequestBody CreateUserDTO createUserDTO) {
+
+        return createUser(createUserDTO);
+
+    }
+
+    private CreatedUserResponseDTO createUser(CreateUserDTO createUserDTO) {
         try {
             userAccountService.createAccount(createUserDTO.username, createUserDTO.password, createUserDTO.email);
         } catch (EmailOccupiedException e) {
@@ -57,8 +65,6 @@ public class UserApi {
         }
 
         return new CreatedUserResponseDTO();
-
-
     }
 
     @RequestMapping(value = "/api/public/users/{email}/sendResetToken", method = RequestMethod.GET)
