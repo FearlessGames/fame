@@ -12,7 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import se.fearless.spacedweb.FameConfig;
+import se.fearless.spacedweb.FameApplication;
 
 import java.nio.charset.Charset;
 
@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = FameConfig.class)
+@ContextConfiguration(classes = FameApplication.class)
 @WebAppConfiguration
 @TestPropertySource(value = "classpath:/test.properties")
 public class UserApiTest {

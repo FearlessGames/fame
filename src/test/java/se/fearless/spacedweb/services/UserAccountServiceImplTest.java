@@ -38,7 +38,7 @@ public class UserAccountServiceImplTest {
 		UserAccountServiceImpl userAccountService = new UserAccountServiceImpl(dao, digester, authSaltService);
 		when(dao.findByUsername(any(String.class))).thenReturn(null);
 		userAccountService.createAccount("olle", "bolle", "knolle");
-		verifyOnce().on(dao).persist(any(UserAccount.class));
+		verifyOnce().on(dao).save(any(UserAccount.class));
 	}
 
 	@Test(expected = UsernameOccupiedException.class)
@@ -46,7 +46,7 @@ public class UserAccountServiceImplTest {
 		UserAccountServiceImpl userAccountService = new UserAccountServiceImpl(dao, digester, authSaltService);
 		when(dao.findByUsername(any(String.class))).thenReturn(new UserAccount(UUIDFactoryImpl.INSTANCE.randomUUID(), "olle", "bolle", "knolle"));
 		userAccountService.createAccount("olle", "bolle", "knolle");
-		verifyNever().on(dao).persist(any(UserAccount.class));
+		verifyNever().on(dao).save(any(UserAccount.class));
 	}
 
 
@@ -138,7 +138,7 @@ public class UserAccountServiceImplTest {
 	public void testCreateUserWithBcrypt() throws UsernameOccupiedException, EmailOccupiedException {
 		UserAccountServiceImpl userAccountService = new UserAccountServiceImpl(dao, digester, authSaltService);
 		userAccountService.createAccount("olle", "olle", "olle@bolle.se");
-		verifyOnce().on(dao).persist(any(UserAccount.class));
+		verifyOnce().on(dao).save(any(UserAccount.class));
 	}
 
 	@Test

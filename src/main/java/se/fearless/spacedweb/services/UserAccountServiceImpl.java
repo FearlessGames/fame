@@ -76,7 +76,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 		UserAccount userAccount = new UserAccount(accountPk, username, userHash, userSalt, email, getDefaultFeatures());
 
 
-		userAccountDao.persist(userAccount);
+		userAccountDao.save(userAccount);
 
 	}
 }

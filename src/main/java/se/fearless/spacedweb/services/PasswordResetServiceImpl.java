@@ -63,6 +63,6 @@ public class PasswordResetServiceImpl implements PasswordResetService {
 		String pwdHash = BCrypter.bcrypt(username + newPassword, newUserSalt);
 		userAccount.setPassword(pwdHash);
 		userAccount.setUserSalt(newUserSalt);
-		userAccountDao.persist(userAccount);
+		userAccountDao.save(userAccount);
 	}
 }

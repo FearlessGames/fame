@@ -6,16 +6,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import se.fearless.common.time.SystemTimeProvider;
@@ -26,11 +24,9 @@ import se.fearless.common.uuid.UUIDFactoryImpl;
 import java.util.Random;
 
 @Configuration
-@EnableWebMvc
-@EnableTransactionManagement
-@ComponentScan(basePackages = {"se.fearless.spacedweb"})
-@PropertySource(value = {"classpath:settings.properties"})
-public class FameConfig extends WebMvcConfigurerAdapter {
+@ComponentScan
+@EnableAutoConfiguration
+public class FameApplication extends WebMvcConfigurerAdapter {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Value("${auth.servicekey.spaced}")
@@ -94,9 +90,7 @@ public class FameConfig extends WebMvcConfigurerAdapter {
 	}
 
 
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-		return new PropertySourcesPlaceholderConfigurer();
+	public static void main(String[] args) {
+		SpringApplication.run(FameApplication.class, args);
 	}
-
 }

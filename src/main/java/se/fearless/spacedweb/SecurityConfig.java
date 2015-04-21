@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-@PropertySource(value = {"classpath:settings.properties"})
+@PropertySource(value = {"classpath:application.properties"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Value("${basic.username}")
@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.csrf()
 				.disable()
 				.authorizeRequests()
-				.antMatchers("/api/**").hasRole("REMOTE")
+				.antMatchers("/api/private/*").hasRole("REMOTE")
 				.and()
 				.httpBasic();
 	}

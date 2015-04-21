@@ -27,14 +27,14 @@ public class UserApi {
         this.passwordResetService = passwordResetService;
     }
 
-    @RequestMapping(value = "/api/private/users/{userName}/salt", headers = "Accept=application/json", method = RequestMethod.GET)
-    public Salts requestSalts(@PathVariable("userName") String userName) {
+	@RequestMapping(value = "/api/public/users/{userName}/salt", headers = "Accept=application/json", method = RequestMethod.GET)
+	public Salts requestSalts(@PathVariable("userName") String userName) {
         return authenticationSaltService.requestSalts(userName);
     }
 
 
-    @RequestMapping(value = "/api/private/users/{userName}/auth/{hash}", method = RequestMethod.GET)
-    public UserAccountDTO auth(@PathVariable("userName") String userName, @PathVariable("hash") String hash) {
+	@RequestMapping(value = "/api/public/users/{userName}/auth/{hash}", method = RequestMethod.GET)
+	public UserAccountDTO auth(@PathVariable("userName") String userName, @PathVariable("hash") String hash) {
         UserAccount userAccount = userAccountService.authenticate(userName, hash);
         return new UserAccountDTO(userAccount.getUsername(), userAccount.getEmail(), userAccount.getTimeOfRegistration(), userAccount.getFeatures());
     }

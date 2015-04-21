@@ -1,9 +1,20 @@
-plugins {
-	id "org.akhikhl.gretty" version "1.2.0"
+buildscript {
+    ext {
+        springBootVersion = '1.2.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:0.4.1.RELEASE")
+    }
 }
 
+
 apply plugin: 'java'
-apply plugin: 'war'
+apply plugin: 'spring-boot'
+apply plugin: 'io.spring.dependency-management'
 
 repositories {
 	mavenLocal()
@@ -17,48 +28,26 @@ repositories {
 	}
 }
 
-gretty.contextPath = '/'
-ext {
-	springVersion = '4.1.6.RELEASE'
-	springSecurityVersion = '4.0.0.RELEASE'
-	hibernateVersion = '4.3.8.Final'
+jar {
+    baseName = 'fame'
+    version = '0.0.1-SNAPSHOT'
 }
 
 
+
 dependencies {
-	compile 'org.slf4j:slf4j-api:1.7.7'
-	compile 'org.mindrot:jbcrypt:0.3m'
-	compile 'javax.servlet:javax.servlet-api:3.1.0'
-	compile 'javax.servlet:jstl:1.2'
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "org.springframework.boot:spring-boot-starter-security"
+    compile "org.springframework.boot:spring-boot-starter-mail"
 
-
-	compile "org.springframework:spring-context:$springVersion"
-	compile "org.springframework:spring-context-support:$springVersion"
-	compile "org.springframework:spring-webmvc:$springVersion"
-	compile "org.springframework:spring-tx:$springVersion"
-	compile "org.springframework:spring-jdbc:$springVersion"
-	compile "org.springframework:spring-orm:$springVersion"
-	compile "org.springframework.security:spring-security-web:$springSecurityVersion"
-	compile "org.springframework.security:spring-security-config:$springSecurityVersion"
-
-
-
-	compile "org.hibernate:hibernate-core:$hibernateVersion"
-	compile "org.hibernate:hibernate-validator:4.1.0.Final"
 	compile "com.h2database:h2:1.4.186"
 	compile "mysql:mysql-connector-java:5.1.35"
-	compile "javax.validation:validation-api:1.0.0.GA"
-	compile "org.javassist:javassist:3.18.1-GA"
-	compile "net.tanesha.recaptcha4j:recaptcha4j:0.0.7"
+
+    compile "net.tanesha.recaptcha4j:recaptcha4j:0.0.7"
 	compile "se.fearless.fearless-common:core:1.0-SNAPSHOT"
 	compile "se.fearless.fearless-common:security:1.0-SNAPSHOT"
 
-	runtime 'com.fasterxml.jackson.core:jackson-databind:2.5.2'
-	runtime "org.slf4j:jcl-over-slf4j:1.7.7"
-	runtime "org.slf4j:jul-to-slf4j:1.7.7"
-	runtime "ch.qos.logback:logback-classic:1.1.2"
-	runtime "javax.mail:mail:1.5.0-b01"
-	testCompile "junit:junit:4.12"
 	testCompile "se.mockachino:mockachino:0.6.2"
-	testCompile "org.springframework:spring-test:$springVersion"
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }
