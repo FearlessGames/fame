@@ -84,71 +84,23 @@ public class UserApi {
 
 
     private static class ResetPasswordDTO {
-        private String password;
-        private String token;
-    }
+		public String password;
+		public String token;
+	}
 
     private static class CreateUserDTO {
-        private String username;
-        private String email;
-        private String password;
-        private String recaptchaChallengeField;
-        private String recaptchaResponseField;
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public void setRecaptchaChallengeField(String recaptchaChallengeField) {
-            this.recaptchaChallengeField = recaptchaChallengeField;
-        }
-
-        public void setRecaptchaResponseField(String recaptchaResponseField) {
-            this.recaptchaResponseField = recaptchaResponseField;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public String getRecaptchaChallengeField() {
-            return recaptchaChallengeField;
-        }
-
-        public String getRecaptchaResponseField() {
-            return recaptchaResponseField;
-        }
-    }
-
-    private static class CreatedUserResponseDTO {
-        private boolean createdUser;
-        private String message;
-
-
-    }
-
+		public String username;
+		public String email;
+		public String password;
+		public String recaptchaChallengeField;
+		public String recaptchaResponseField;
+	}
 
     private static class UserAccountDTO {
-        private String username;
-        private String email;
-        private Date timeOfRegistration;
-        private List<String> features;
+		public String username;
+		public String email;
+		public Date timeOfRegistration;
+		public List<String> features;
 
         public UserAccountDTO(String username, String email, Date timeOfRegistration, List<String> features) {
             this.username = username;
