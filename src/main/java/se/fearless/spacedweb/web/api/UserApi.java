@@ -1,6 +1,8 @@
 package se.fearless.spacedweb.web.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.fearless.spacedweb.model.Salts;
 import se.fearless.spacedweb.model.UserAccount;
@@ -38,33 +40,28 @@ public class UserApi {
     }
 
     @RequestMapping(value = "/api/public/users", method = RequestMethod.POST)
-    public CreatedUserResponseDTO createWithCaptcha(CreateUserDTO createUserDTO, HttpServletRequest request) {
+    public ResponseEntity<?> createWithCaptcha(CreateUserDTO createUserDTO, HttpServletRequest request) {
         String remoteAddress = request.getRemoteAddr();
         boolean valid = reCaptchaService.validateCaptcha(remoteAddress, createUserDTO.recaptchaChallengeField, createUserDTO.recaptchaChallengeField);
         if (!valid) {
-            return new CreatedUserResponseDTO();
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return createUser(createUserDTO);
 
     }
 
     @RequestMapping(value = "/api/private/users", method = RequestMethod.POST)
-    public CreatedUserResponseDTO create(@RequestBody CreateUserDTO createUserDTO) {
-
+    public ResponseEntity<?> create(@RequestBody CreateUserDTO createUserDTO) {
         return createUser(createUserDTO);
-
     }
 
-    private CreatedUserResponseDTO createUser(CreateUserDTO createUserDTO) {
+    private ResponseEntity<?> createUser(CreateUserDTO createUserDTO) {
         try {
             userAccountService.createAccount(createUserDTO.username, createUserDTO.password, createUserDTO.email);
-        } catch (EmailOccupiedException e) {
-            return new CreatedUserResponseDTO();
-        } catch (UsernameOccupiedException e) {
-            return new CreatedUserResponseDTO();
+        } catch (EmailOccupiedException | UsernameOccupiedException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return new CreatedUserResponseDTO();
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/api/public/users/{email}/sendResetToken", method = RequestMethod.GET)
@@ -97,11 +94,53 @@ public class UserApi {
         private String password;
         private String recaptchaChallengeField;
         private String recaptchaResponseField;
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public void setRecaptchaChallengeField(String recaptchaChallengeField) {
+            this.recaptchaChallengeField = recaptchaChallengeField;
+        }
+
+        public void setRecaptchaResponseField(String recaptchaResponseField) {
+            this.recaptchaResponseField = recaptchaResponseField;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public String getRecaptchaChallengeField() {
+            return recaptchaChallengeField;
+        }
+
+        public String getRecaptchaResponseField() {
+            return recaptchaResponseField;
+        }
     }
 
     private static class CreatedUserResponseDTO {
         private boolean createdUser;
         private String message;
+
+
     }
 
 
