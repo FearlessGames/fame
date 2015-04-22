@@ -3,10 +3,7 @@ package se.fearless.spacedweb.web.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import se.fearless.spacedweb.model.Salts;
 import se.fearless.spacedweb.security.FameAuthTokenService;
 import se.fearless.spacedweb.services.*;
@@ -31,8 +28,8 @@ public class PublicUserAccountApi {
         this.passwordResetService = passwordResetService;
     }
 
-	@RequestMapping(value = "/{userName}/salt", headers = "Accept=application/json", method = RequestMethod.GET)
-	public Salts requestSalts(@PathVariable("userName") String userName) {
+    @RequestMapping(value = "/{userName}/salt", method = RequestMethod.GET)
+    public Salts requestSalts(@PathVariable("userName") String userName) {
         return authenticationSaltService.requestSalts(userName);
     }
 
@@ -47,8 +44,8 @@ public class PublicUserAccountApi {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> create(CreateUserDTO createUserDTO, HttpServletRequest request) {
-		String remoteAddress = request.getRemoteAddr();
+    public ResponseEntity<?> create(@RequestBody CreateUserDTO createUserDTO, HttpServletRequest request) {
+        String remoteAddress = request.getRemoteAddr();
 		boolean valid = reCaptchaService.validateCaptcha(remoteAddress, createUserDTO.recaptchaResponseField, createUserDTO.recaptchaChallengeField);
 		if (!valid) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -95,7 +92,47 @@ public class PublicUserAccountApi {
 		public String password;
 		public String recaptchaChallengeField;
 		public String recaptchaResponseField;
-	}
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getRecaptchaChallengeField() {
+            return recaptchaChallengeField;
+        }
+
+        public void setRecaptchaChallengeField(String recaptchaChallengeField) {
+            this.recaptchaChallengeField = recaptchaChallengeField;
+        }
+
+        public String getRecaptchaResponseField() {
+            return recaptchaResponseField;
+        }
+
+        public void setRecaptchaResponseField(String recaptchaResponseField) {
+            this.recaptchaResponseField = recaptchaResponseField;
+        }
+    }
 
 	private static class FameAuthToken {
 		public String token;
