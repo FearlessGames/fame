@@ -10,8 +10,8 @@ import java.io.IOException;
 @Controller
 public class IndexController {
 
-	@RequestMapping("*")
+	@RequestMapping("/")
 	public void hello(HttpServletResponse response) throws IOException {
-		response.sendRedirect("createAccount.html");
+		response.sendRedirect("index.html");
 	}
 }
