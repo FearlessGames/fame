@@ -10,6 +10,7 @@ import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.services.UserAccountService;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @Controller
 public class SpacedAuthenticationController extends AuthenticationController {
@@ -23,8 +24,8 @@ public class SpacedAuthenticationController extends AuthenticationController {
 	@RequestMapping(value = "/api/auth/spaced.html", method = RequestMethod.GET)
 	public String authenticateSpaced(HttpServletResponse response, Model model, String userName, String hash, String serviceKey) {
 		authService(serviceKey);
-		UserAccount userAccount = userAccountService.authenticate(userName, hash);
-		authorize(response, model, SPACED_FEATURE, userAccount);
+		Optional<UserAccount> userAccount = userAccountService.authenticate(userName, hash);
+		authorize(response, model, SPACED_FEATURE, userAccount.get());
 		return "authSpaced";
 	}
 

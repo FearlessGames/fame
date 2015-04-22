@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = FameApplication.class)
 @WebAppConfiguration
 @TestPropertySource(value = "classpath:/test.properties")
-public class UserApiTest {
+public class PrivateUserAccountApiTest {
 	private MockMvc mockMvc;
 
 	private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -34,7 +34,7 @@ public class UserApiTest {
 	private WebApplicationContext webApplicationContext;
 
 	@Autowired
-	private UserApi userApi;
+	private PublicUserAccountApi userApi;
 
 
 	@Before

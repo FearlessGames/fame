@@ -10,6 +10,7 @@ import se.fearless.spacedweb.model.UserAccount;
 import se.fearless.spacedweb.services.UserAccountService;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @Controller
 public class ForumAuthenticationController extends AuthenticationController {
@@ -23,8 +24,8 @@ public class ForumAuthenticationController extends AuthenticationController {
 	@RequestMapping(value = "/api/auth/forum.html", method = RequestMethod.GET)
 	public String authenticateSpaced(HttpServletResponse response, Model model, String userName, String hash, String serviceKey) {
 		authService(serviceKey);
-		UserAccount userAccount = userAccountService.authenticate(userName, hash);
-		authorize(response, model, FEATURE, userAccount);
+		Optional<UserAccount> userAccount = userAccountService.authenticate(userName, hash);
+		authorize(response, model, FEATURE, userAccount.get());
 		return "authForum";
 	}
 

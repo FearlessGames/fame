@@ -62,7 +62,7 @@ public class UserAccountServiceImplTest {
 		when(authSaltService.getOneTimeSaltForUsername(username)).thenReturn(oneTimeSalt);
 
 		String hashFromClient = digester.sha512Hex(bcryptUserPasswordAndUserSalt + oneTimeSalt);
-		UserAccount account = userAccountService.authenticate(username, hashFromClient);
+		UserAccount account = userAccountService.authenticate(username, hashFromClient).get();
 		assertNotNull(account);
 	}
 
@@ -80,7 +80,7 @@ public class UserAccountServiceImplTest {
 		String wrongUserSalt = BCrypt.gensalt(5);
 		String wrongBCryptHashDueToWrongSalt = BCrypter.bcrypt(correctPassword, wrongUserSalt);
 		String hashFromClient = digester.sha512Hex(wrongBCryptHashDueToWrongSalt + oneTimeSalt);
-		UserAccount account = userAccountService.authenticate(username, hashFromClient);
+		UserAccount account = userAccountService.authenticate(username, hashFromClient).get();
 		assertNull(account);
 	}
 
@@ -98,7 +98,7 @@ public class UserAccountServiceImplTest {
 		String wrongUserSalt = BCrypt.gensalt(5);
 		String wrongBCryptHashDueToWrongSalt = BCrypter.bcrypt(correctPassword, wrongUserSalt);
 		String hashFromClient = digester.sha512Hex(wrongBCryptHashDueToWrongSalt + oneTimeSalt);
-		UserAccount account = userAccountService.authenticate(username, hashFromClient);
+		UserAccount account = userAccountService.authenticate(username, hashFromClient).get();
 		assertNull(account);
 	}
 
@@ -116,7 +116,7 @@ public class UserAccountServiceImplTest {
 		when(authSaltService.getOneTimeSaltForUsername(username)).thenReturn(oneTimeSalt);
 		String wrongBCryptHashDueToWrongSalt = BCrypter.bcrypt(incorrectPassword, correctUserSalt);
 		String hashFromClient = digester.sha512Hex(wrongBCryptHashDueToWrongSalt + oneTimeSalt);
-		UserAccount account = userAccountService.authenticate(username, hashFromClient);
+		UserAccount account = userAccountService.authenticate(username, hashFromClient).get();
 		assertNull(account);
 	}
 
@@ -151,7 +151,7 @@ public class UserAccountServiceImplTest {
 		when(authSaltService.getOneTimeSaltForUsername("user")).thenReturn(oneTimeSalt);
 		when(uad.sha512Hex(any(String.class))).thenReturn("hash");
 		UserAccountServiceImpl userAccountService = new UserAccountServiceImpl(dao, uad, authSaltService);
-		UserAccount actualUserAccount = userAccountService.authenticate("user", "hash");
+		UserAccount actualUserAccount = userAccountService.authenticate("user", "hash").get();
 		Assert.assertEquals(wantedUserAccount, actualUserAccount);
 	}
 

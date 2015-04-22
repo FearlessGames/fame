@@ -9,6 +9,7 @@ import se.fearless.spacedweb.services.UserAccountService;
 import se.mockachino.annotations.Mock;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 import static junit.framework.Assert.assertEquals;
 import static se.mockachino.Mockachino.*;
@@ -35,7 +36,7 @@ public class SpacedAuthenticationControllerTest {
 		UUID uuid = new UUID(1l, 1l);
 		UserAccount userAccount = new UserAccount(uuid, "a", "b", "c");
 
-		when(userAccountService.authenticate(any(String.class), any(String.class))).thenReturn(userAccount);
+		when(userAccountService.authenticate(any(String.class), any(String.class))).thenReturn(Optional.of(userAccount));
 		when(userAccountService.isAccountAuthorizedForFeature(userAccount, "spaced")).thenReturn(Boolean.TRUE);
 		String viewName = ac.authenticateSpaced(response, model, "blah", "blah", "omagahd");
 		verifyOnce().on(model).addAttribute("userAccount", userAccount);
@@ -48,7 +49,7 @@ public class SpacedAuthenticationControllerTest {
 		UUID uuid = new UUID(1l, 1l);
 		UserAccount userAccount = new UserAccount(uuid, "a", "b", "c");
 
-		when(userAccountService.authenticate(any(String.class), any(String.class))).thenReturn(userAccount);
+		when(userAccountService.authenticate(any(String.class), any(String.class))).thenReturn(Optional.of(userAccount));
 		when(userAccountService.isAccountAuthorizedForFeature(userAccount, "spaced")).thenReturn(Boolean.TRUE);
 		String viewName = ac.authenticateSpaced(response, model, "blah", "blah", "poopyface");
 		verifyOnce().on(model).addAttribute("userAccount", userAccount);
@@ -71,7 +72,7 @@ public class SpacedAuthenticationControllerTest {
 		SpacedAuthenticationController ac = new SpacedAuthenticationController(userAccountService, "omagahd");
 		UUID uuid = new UUID(1l, 1l);
 		UserAccount userAccount = new UserAccount(uuid, "a", "b", "c");
-		when(userAccountService.authenticate(any(String.class), any(String.class))).thenReturn(userAccount);
+		when(userAccountService.authenticate(any(String.class), any(String.class))).thenReturn(Optional.of(userAccount));
 		when(userAccountService.isAccountAuthorizedForFeature(userAccount, "spaced")).thenReturn(Boolean.FALSE);
 		String viewName = ac.authenticateSpaced(response, model, "blah", "blah", "omagahd");
 		verifyNever().on(model).addAttribute(any(String.class), any(Object.class));

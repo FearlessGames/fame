@@ -13,6 +13,7 @@ import se.fearless.spacedweb.persistance.dao.UserAccountDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -44,17 +45,19 @@ public class UserAccountServiceImpl implements UserAccountService {
 
 	@Override
 	@Transactional
-	public UserAccount authenticate(String username, String providedHash) {
+	public Optional<UserAccount> authenticate(String username, String providedHash) {
 		UserAccount userAccount = userAccountDao.findByUsername(username);
 		String actualBCryptHash = userAccount.getPassword();  //pwd in db is bcrypt(username+password, usersalt). //provided hash is sha512(bcrypt(username+password, usersalt)+onetimesalt)
 		String oneTimeSalt = authenticationSaltService.getOneTimeSaltForUsername(username);
 
 		if (oneTimeSalt == null) {
-			throw new RuntimeException("Could not find one time salt for username " + username);
+			return Optional.empty();
 		}
 
 		String serverHash = digester.sha512Hex(actualBCryptHash + oneTimeSalt);
-		return serverHash.equals(providedHash) ? userAccount : null;
+
+		return Optional.ofNullable(serverHash.equals(providedHash) ? userAccount : null);
+
 	}
 
 	@Override
