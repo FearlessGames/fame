@@ -7,12 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -26,17 +21,54 @@ import se.fearless.common.uuid.UUIDFactoryImpl;
 
 import java.util.Random;
 
-@SpringBootApplication
-public class FameApplication extends SpringBootServletInitializer {
+@Configuration
+public class BeanConfig {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	public static void main(String[] args) {
-		SpringApplication.run(FameApplication.class, args);
+	@Value("${auth.servicekey.spaced}")
+	private String spacedServiceKey;
+
+	@Value("${auth.servicekey.forum}")
+	private String forumServiceKey;
+
+
+	@Value("${mailserver}")
+	private String mailServer;
+
+	@Bean
+	@Qualifier("spacedServiceKey")
+	public String getSpacedServiceKey() {
+		return spacedServiceKey;
+	}
+
+	@Bean
+	@Qualifier("forumServiceKey")
+	public String forumServiceKey() {
+		return forumServiceKey;
+	}
+
+	@Bean
+	public TimeProvider timeProvider() {
+		return new SystemTimeProvider();
+	}
+
+	@Bean
+	public Random numberGenerator() {
+		return new Random();
 	}
 
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(FameApplication.class);
-    }
+	@Bean
+	@Autowired
+	public UUIDFactory uuidFactory(TimeProvider timeProvider, Random random) {
+		return new UUIDFactoryImpl(timeProvider, random);
+	}
+
+	@Bean
+	public MailSender mailSender() {
+		JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+		javaMailSender.setHost(mailServer);
+		return javaMailSender;
+	}
+
 }

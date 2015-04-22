@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -26,17 +23,21 @@ import se.fearless.common.uuid.UUIDFactoryImpl;
 
 import java.util.Random;
 
-@SpringBootApplication
-public class FameApplication extends SpringBootServletInitializer {
+@Configuration
+public class WebConfig extends WebMvcConfigurerAdapter {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	public static void main(String[] args) {
-		SpringApplication.run(FameApplication.class, args);
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
 	}
 
+	@Bean
+	public InternalResourceViewResolver getInternalResourceViewResolver() {
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/WEB-INF/views/");
+		resolver.setSuffix(".jsp");
+		return resolver;
+	}
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(FameApplication.class);
-    }
 }
