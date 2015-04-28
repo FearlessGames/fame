@@ -71,7 +71,7 @@ public class PublicUserAccountApi {
     }
 
 	@RequestMapping(value = "/{userName}/resetPassword", method = RequestMethod.POST)
-	public void resetPassword(@PathVariable("userName") String userName, ResetPasswordDTO passwordDTO) {
+    public void resetPassword(@PathVariable("userName") String userName, @RequestBody ResetPasswordDTO passwordDTO) {
         try {
             passwordResetService.changePassword(passwordDTO.token, passwordDTO.password);
         } catch (IllegalTokenException e) {
