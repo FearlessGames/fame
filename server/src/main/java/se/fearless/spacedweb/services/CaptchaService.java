@@ -7,5 +7,7 @@ public interface CaptchaService {
 
     boolean validateCaptcha(String clientRemoteAddress, String challenge, String response);
 
-	String renderToHtml();
+    boolean validateCaptcha(String clientRemoteAddress, String response);
+
+    String renderToHtml();
 }

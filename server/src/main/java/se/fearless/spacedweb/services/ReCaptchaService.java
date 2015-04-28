@@ -34,6 +34,12 @@ public class ReCaptchaService implements CaptchaService {
         return reCaptchaResponse.isValid();
     }
 
+    @Override
+    public boolean validateCaptcha(String clientRemoteAddress, String response) {
+        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(clientRemoteAddress, publicKey, response);
+        return reCaptchaResponse.isValid();
+    }
+
     public String renderToHtml() {
         ReCaptcha c = ReCaptchaFactory.newReCaptcha(publicKey, privateKey, false);
         return c.createRecaptchaHtml(null, null);

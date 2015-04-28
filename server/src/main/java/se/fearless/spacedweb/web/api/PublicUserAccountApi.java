@@ -46,8 +46,8 @@ public class PublicUserAccountApi {
 	@RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody CreateUserDTO createUserDTO, HttpServletRequest request) {
         String remoteAddress = request.getRemoteAddr();
-		boolean valid = reCaptchaService.validateCaptcha(remoteAddress, createUserDTO.recaptchaResponseField, createUserDTO.recaptchaChallengeField);
-		if (!valid) {
+        boolean valid = reCaptchaService.validateCaptcha(remoteAddress, createUserDTO.recaptchaResponseField);
+        if (!valid) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
@@ -90,7 +90,6 @@ public class PublicUserAccountApi {
 		public String username;
 		public String email;
 		public String password;
-		public String recaptchaChallengeField;
 		public String recaptchaResponseField;
 
         public String getUsername() {
@@ -115,14 +114,6 @@ public class PublicUserAccountApi {
 
         public void setPassword(String password) {
             this.password = password;
-        }
-
-        public String getRecaptchaChallengeField() {
-            return recaptchaChallengeField;
-        }
-
-        public void setRecaptchaChallengeField(String recaptchaChallengeField) {
-            this.recaptchaChallengeField = recaptchaChallengeField;
         }
 
         public String getRecaptchaResponseField() {
