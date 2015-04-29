@@ -1,14 +1,14 @@
 buildscript {
-    ext {
-        springBootVersion = '1.2.3.RELEASE'
-    }
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("io.spring.gradle:dependency-management-plugin:0.4.1.RELEASE")
-    }
+	ext {
+		springBootVersion = '1.2.3.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("io.spring.gradle:dependency-management-plugin:0.4.1.RELEASE")
+	}
 }
 
 
@@ -29,27 +29,33 @@ repositories {
 }
 
 jar {
-    baseName = 'fame'
-    version = '0.0.1-SNAPSHOT'
+	baseName = 'fame'
+	version = '0.0.1-SNAPSHOT'
+	def frontEndBuildDir = project.rootProject.subprojects.find {
+		println it.name
+		it.name.contains("frontend")
+	}.getBuildDir()
+
+	from zipTree(frontEndBuildDir.absolutePath + "/distributions/frontend.zip")
 }
 
 
 
 dependencies {
-    compile project(':frontend')
+	compile project(':frontend')
 
-    compile "org.springframework.boot:spring-boot-starter-web"
-    compile "org.springframework.boot:spring-boot-starter-data-jpa"
-    compile "org.springframework.boot:spring-boot-starter-security"
-    compile "org.springframework.boot:spring-boot-starter-mail"
+	compile "org.springframework.boot:spring-boot-starter-web"
+	compile "org.springframework.boot:spring-boot-starter-data-jpa"
+	compile "org.springframework.boot:spring-boot-starter-security"
+	compile "org.springframework.boot:spring-boot-starter-mail"
 
 	compile "com.h2database:h2:1.4.186"
 	compile "mysql:mysql-connector-java:5.1.35"
 
-    compile "net.tanesha.recaptcha4j:recaptcha4j:0.0.7"
+	compile "net.tanesha.recaptcha4j:recaptcha4j:0.0.7"
 	compile "se.fearless.fearless-common:core:1.0-SNAPSHOT"
 	compile "se.fearless.fearless-common:security:1.0-SNAPSHOT"
 
 	testCompile "se.mockachino:mockachino:0.6.2"
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+	testCompile("org.springframework.boot:spring-boot-starter-test")
 }

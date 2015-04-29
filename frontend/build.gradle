@@ -1,9 +1,10 @@
-apply plugin: 'java'
+apply plugin: 'base'
 
-jar {
-    from 'dist'
-    eachFile { details ->
-        details.path = details.path.startsWith('META-INF') ?: 'static/'+details.path
-    }
-    includeEmptyDirs = false
+
+task pack(type: Zip) {
+	baseName = "frontend"
+	from 'src'
+	into 'static'
 }
+
+assemble.dependsOn(pack)
