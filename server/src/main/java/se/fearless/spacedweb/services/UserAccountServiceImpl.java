@@ -38,7 +38,8 @@ public class UserAccountServiceImpl implements UserAccountService {
 	private List<String> getDefaultFeatures() {
 		List<String> defaultFeatures = new ArrayList<String>();
 		defaultFeatures.add("spaced");
-		defaultFeatures.add("forum");
+        defaultFeatures.add("spaceship");
+        defaultFeatures.add("forum");
 		return defaultFeatures;
 	}
 

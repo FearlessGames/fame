@@ -61,15 +61,15 @@ public class FameAuthTokenServiceImpl implements FameAuthTokenService {
 
 	private byte[] decrypt(byte[] key, byte[] encrypted) throws Exception {
 		SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
-		Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
-		cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
 		return cipher.doFinal(encrypted);
 	}
 
 	private byte[] encrypt(byte[] key, byte[] clear) throws Exception {
 		SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
-		Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
-		cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
 		return cipher.doFinal(clear);
 	}
 
