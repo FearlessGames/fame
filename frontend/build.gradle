@@ -8,3 +8,7 @@ task pack(type: Zip) {
 }
 
 assemble.dependsOn(pack)
+
+artifacts {
+	archives pack
+}
