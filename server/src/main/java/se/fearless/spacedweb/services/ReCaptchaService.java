@@ -4,32 +4,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
 public class ReCaptchaService implements CaptchaService {
-    private final static String publicKey = "6LdQCAYTAAAAAN64Mg8pkupmxT0EcA5nQWuF-lES";
-    private final static String privateKey = "6LdQCAYTAAAAAHzjlsATWoc9-SXv8QYsx8nsYAap";
 
     private final RestTemplate restTemplate;
+    private final String publicKey;
+    private final String privateKey;
 
     @Autowired
-    public ReCaptchaService(RestTemplate restTemplate) {
+    public ReCaptchaService(RestTemplate restTemplate, @Qualifier("recaptcha.publicKey") String publicKey, @Qualifier("recaptcha.privateKey") String
+            privateKey) {
         this.restTemplate = restTemplate;
-    }
-
-    @Override
-    public boolean validateCaptcha(HttpServletRequest request) {
-        String remoteAddr = request.getRemoteAddr();
-        String response = request.getParameter("recaptcha_response_field");
-
-        return validateCaptcha(remoteAddr, response);
+        this.publicKey = publicKey;
+        this.privateKey = privateKey;
     }
 
 

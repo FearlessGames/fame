@@ -29,6 +29,13 @@ public class BeanConfig {
 	private String forumServiceKey;
 
 
+	@Value("${recaptcha.publicKey}")
+	private String recaptchaPublicKey;
+
+	@Value("${recaptcha.privateKey}")
+	private String recaptchaPrivateKey;
+
+
 	@Value("${mailserver}")
 	private String mailServer;
 
@@ -36,6 +43,19 @@ public class BeanConfig {
 	@Qualifier("spacedServiceKey")
 	public String getSpacedServiceKey() {
 		return spacedServiceKey;
+	}
+
+
+	@Bean
+	@Qualifier("recaptcha.publicKey")
+	public String getRecaptchaPublicKey() {
+		return recaptchaPublicKey;
+	}
+
+	@Bean
+	@Qualifier("recaptcha.privateKey")
+	public String getRecaptchaPrivateKey() {
+		return recaptchaPrivateKey;
 	}
 
 	@Bean
@@ -72,5 +92,6 @@ public class BeanConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
 
 }
