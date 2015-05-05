@@ -44,8 +44,8 @@ public class CreateAccountController {
 	public String onPost(@Valid UserAccountForm userAccountForm, BindingResult bindingResult, HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
 			return FORM_VIEW;
-		} else if (!captchaService.validateCaptcha(request)) {
-			return FORM_VIEW;
+			//} else if (!captchaService.validateCaptcha(request)) {
+			//	return FORM_VIEW;
 		} else {
 			try {
 				userAccountService.createAccount(userAccountForm.getUsername(), userAccountForm.getPassword(), userAccountForm.getEmail());

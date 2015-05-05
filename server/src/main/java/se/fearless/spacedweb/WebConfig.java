@@ -36,11 +36,22 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        boolean devMode = "true".equals(this.devMode);
 
-        String location = devMode ? "file:///" + System.getProperty("user.dir") + "/frontend/src/" : "classpath:static/";
+        if (devMode.equals("frontend")) {
+            String frontEnd = "file:///" + System.getProperty("user.dir") + "/frontend/src/";
+            registry.addResourceHandler("/**")
+                    .addResourceLocations(frontEnd);
 
-        registry.addResourceHandler("/**").addResourceLocations(location);
+        } else if (devMode.equals("angular-frontend")) {
+            String angularFrontEnd = "file:///" + System.getProperty("user.dir") + "/angular-frontend/";
+            registry.addResourceHandler("/**")
+                    .addResourceLocations(angularFrontEnd + "app/");
+            registry.addResourceHandler("/bower_components/**")
+                    .addResourceLocations(angularFrontEnd + "bower_components/");
+        } else {
+            registry.addResourceHandler("/**")
+                    .addResourceLocations("classpath:static/");
+        }
 
     }
 }

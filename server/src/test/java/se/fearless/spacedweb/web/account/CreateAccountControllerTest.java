@@ -10,8 +10,6 @@ import se.fearless.spacedweb.services.UsernameOccupiedException;
 import se.fearless.spacedweb.web.FormValidator;
 import se.mockachino.annotations.Mock;
 
-import javax.servlet.http.HttpServletRequest;
-
 import static junit.framework.Assert.assertEquals;
 import static se.mockachino.Mockachino.*;
 import static se.mockachino.matchers.Matchers.any;
@@ -31,7 +29,7 @@ public class CreateAccountControllerTest {
 	@Before
 	public void setUp() {
 		setupMocks(this);
-		when(captchaService.validateCaptcha(any(HttpServletRequest.class))).thenReturn(true);
+		//when(captchaService.validateCaptcha(any(HttpServletRequest.class))).thenReturn(true);
 	}
 
 	@Test

@@ -1,1 +1,1 @@
-include 'frontend', 'server'
+include 'frontend', 'angular-frontend', 'server'
